@@ -1,15 +1,20 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useImmerReducer } from 'use-immer';
 import { createDefaultPalette } from './types';
 import { paletteReducer } from './state/paletteReducer';
 import { PalettePanel } from './components/PalettePanel/PalettePanel';
 import { ImageCanvas } from './components/ImageCanvas/ImageCanvas';
+import { ImportModal } from './components/ImportModal/ImportModal';
+import { ExportModal } from './components/ExportModal/ExportModal';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useImageLoader } from './hooks/useImageLoader';
+
+type ActiveModal = 'none' | 'import' | 'export';
 
 export function App() {
   const [palette, dispatch] = useImmerReducer(paletteReducer, undefined, createDefaultPalette);
   const { image, loadImage, openImagePicker } = useImageLoader();
+  const [activeModal, setActiveModal] = useState<ActiveModal>('none');
   const selectedIndex = useMemo(
     () => palette.colours.findIndex((c) => c.id === palette.selectedColourId),
     [palette.colours, palette.selectedColourId],
@@ -66,10 +71,10 @@ export function App() {
           // Phase 7
         }}
         onOpenImport={() => {
-          // Phase 6
+          setActiveModal('import');
         }}
         onOpenExport={() => {
-          // Phase 6
+          setActiveModal('export');
         }}
       />
       <ImageCanvas
@@ -79,6 +84,25 @@ export function App() {
         onLoadImage={loadImage}
         onOpenImagePicker={openImagePicker}
       />
+      {activeModal === 'import' && (
+        <ImportModal
+          onImport={(imported) => {
+            dispatch({ type: 'IMPORT_PALETTE', palette: imported });
+            setActiveModal('none');
+          }}
+          onClose={() => {
+            setActiveModal('none');
+          }}
+        />
+      )}
+      {activeModal === 'export' && (
+        <ExportModal
+          palette={palette}
+          onClose={() => {
+            setActiveModal('none');
+          }}
+        />
+      )}
     </div>
   );
 }
