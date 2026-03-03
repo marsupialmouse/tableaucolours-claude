@@ -52,7 +52,7 @@ export function Swatch({
         <button
           type="button"
           aria-label="Remove colour"
-          className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-white leading-none hover:bg-red-600"
+          className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-500 text-white leading-none shadow-sm hover:bg-red-600"
           onClick={(e) => {
             e.stopPropagation();
             onRemove(colour.id);

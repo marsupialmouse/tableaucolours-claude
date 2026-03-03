@@ -1,12 +1,15 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useImmerReducer } from 'use-immer';
 import { createDefaultPalette } from './types';
 import { paletteReducer } from './state/paletteReducer';
 import { PalettePanel } from './components/PalettePanel/PalettePanel';
+import { ImageCanvas } from './components/ImageCanvas/ImageCanvas';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
+import { useImageLoader } from './hooks/useImageLoader';
 
 export function App() {
   const [palette, dispatch] = useImmerReducer(paletteReducer, undefined, createDefaultPalette);
+  const { image, loadImage, openImagePicker } = useImageLoader();
 
   const selectedIndex = useMemo(
     () => palette.colours.findIndex((c) => c.id === palette.selectedColourId),
@@ -45,12 +48,21 @@ export function App() {
 
   useKeyboardShortcuts(shortcutHandlers);
 
+  const handlePickColour = useCallback(
+    (hex: string) => {
+      if (palette.selectedColourId) {
+        dispatch({ type: 'UPDATE_COLOUR', colourId: palette.selectedColourId, hex });
+      }
+    },
+    [dispatch, palette.selectedColourId],
+  );
+
   return (
     <div className="flex h-screen bg-white">
       <PalettePanel
         palette={palette}
         dispatch={dispatch}
-        hasImage={false}
+        hasImage={image !== null}
         onOpenExtract={() => {
           // Phase 7
         }}
@@ -64,9 +76,13 @@ export function App() {
           // Phase 4
         }}
       />
-      <main className="flex flex-1 items-center justify-center bg-gray-100">
-        <p className="text-gray-400">Image canvas will go here</p>
-      </main>
+      <ImageCanvas
+        image={image}
+        canPickColour={palette.selectedColourId !== null}
+        onPickColour={handlePickColour}
+        onLoadImage={loadImage}
+        onOpenImagePicker={openImagePicker}
+      />
     </div>
   );
 }

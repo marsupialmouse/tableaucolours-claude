@@ -10,9 +10,9 @@ describe('App', () => {
     expect(screen.getAllByRole('button', { name: /#[A-F0-9]{6}/i })).toHaveLength(1);
   });
 
-  it('renders the main content area', () => {
+  it('renders the image drop zone', () => {
     render(<App />);
-    expect(screen.getByText('Image canvas will go here')).toBeInTheDocument();
+    expect(screen.getByTestId('image-drop-zone')).toBeInTheDocument();
   });
 
   it('adds a colour when + key is pressed', async () => {
