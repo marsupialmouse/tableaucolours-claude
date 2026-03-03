@@ -37,9 +37,17 @@ React 19 + Vite 7 + TypeScript + Tailwind CSS v4 (via `@tailwindcss/vite` plugin
 - Use `type` keyword for type-only imports: `import { type Foo } from './bar'` (enforced by `consistent-type-imports` rule)
 - Unused variables prefixed with `_` are allowed
 - Prettier with `prettier-plugin-tailwindcss` for class sorting
+- **Australian English** in code — use Australian/British spelling for identifiers (e.g. `colour`, `favourite`, `initialise`). Exception: use American spelling when required by external formats or APIs (e.g. `<color>` in Tableau XML, `backgroundColor` in CSS/DOM).
 
 ## Workflow Rules
 
 - **Pre-commit verification** — Before committing, run `pnpm build` and `pnpm test` to ensure they pass. The pre-commit hook handles lint and format automatically — never skip it with `--no-verify`.
-- **Component file organization** — Components live in subfolders of `src/components/`, with related files colocated (e.g., `src/components/ColorPicker/ColorPicker.tsx`, `src/components/ColorPicker/ColorPicker.test.tsx`).
+- **Component file organization** — Components live in subfolders of `src/components/`, with related files colocated (e.g., `src/components/ColourPicker/ColourPicker.tsx`, `src/components/ColourPicker/ColourPicker.test.tsx`).
 - **Test data conventions** — Prefer factory/helper functions to generate test data rather than shared mutable state or `beforeEach` setup blocks.
+
+## Testing
+
+- **Factory functions** — Create `renderComponentName()` helpers that accept `Partial<Props>` overrides. This keeps tests focused on what they're asserting, not boilerplate setup.
+- **jsdom limitations** — jsdom does not implement `HTMLCanvasElement.getContext()` or `Element.setPointerCapture()`. Canvas components should be tested for structure and props, not pixel output. Use optional chaining (`?.()`) on `setPointerCapture`/`releasePointerCapture` calls.
+- **Mock patterns for drag events** — `React.DragEvent` mocks need at minimum `{ dataTransfer: { effectAllowed: '' } }` for `dragStart` and `{ preventDefault: vi.fn() }` for `drop`.
+- **Avoid `toHaveStyle` for computed properties** — jsdom's style handling can be unreliable for properties like `order`. Access `element.style.order` directly instead.
