@@ -15,6 +15,7 @@ function renderSwatchList(overrides?: Partial<React.ComponentProps<typeof Swatch
     onSelect: vi.fn(),
     onRemove: vi.fn(),
     onDoubleClick: vi.fn(),
+    getDragHandlers: () => ({}),
   };
   const props = { ...defaultProps, ...overrides };
   render(<SwatchList {...props} />);

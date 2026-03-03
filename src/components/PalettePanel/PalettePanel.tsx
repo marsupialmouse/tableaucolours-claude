@@ -7,6 +7,7 @@ import { SwatchList } from '../SwatchList/SwatchList';
 import { PaletteActions } from '../PaletteActions/PaletteActions';
 import { PalettePreview } from '../PalettePreview/PalettePreview';
 import { ColourPicker } from '../ColourPicker/ColourPicker';
+import { useDragReorder } from '../../hooks/useDragReorder';
 
 interface PalettePanelProps {
   palette: Palette;
@@ -15,7 +16,6 @@ interface PalettePanelProps {
   onOpenExtract: () => void;
   onOpenImport: () => void;
   onOpenExport: () => void;
-  getDragHandlers?: ((index: number) => Record<string, unknown>) | undefined;
 }
 
 export function PalettePanel({
@@ -25,10 +25,15 @@ export function PalettePanel({
   onOpenExtract,
   onOpenImport,
   onOpenExport,
-  getDragHandlers,
 }: PalettePanelProps) {
   const [editingColourId, setEditingColourId] = useState<string | null>(null);
   const pickerAnchorRef = useRef<HTMLElement | null>(null);
+
+  const { getDragHandlers } = useDragReorder({
+    onMove: (fromIndex, toIndex) => {
+      dispatch({ type: 'MOVE_COLOUR', fromIndex, toIndex });
+    },
+  });
 
   const editingColour = editingColourId
     ? palette.colours.find((c) => c.id === editingColourId)

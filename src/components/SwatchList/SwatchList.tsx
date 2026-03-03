@@ -7,7 +7,7 @@ interface SwatchListProps {
   onSelect: (colourId: string) => void;
   onRemove: (colourId: string) => void;
   onDoubleClick: (colourId: string, element: HTMLElement) => void;
-  getDragHandlers?: ((index: number) => Record<string, unknown>) | undefined;
+  getDragHandlers: (index: number) => Record<string, unknown>;
 }
 
 export function SwatchList({
@@ -32,7 +32,7 @@ export function SwatchList({
           onSelect={onSelect}
           onRemove={onRemove}
           onDoubleClick={onDoubleClick}
-          dragHandlers={getDragHandlers?.(index)}
+          dragHandlers={getDragHandlers(index)}
         />
       ))}
     </div>
