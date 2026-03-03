@@ -17,9 +17,9 @@ function normaliseHex(raw: string): string {
 
   // 3-char shorthand: #RGB → #RRGGBB
   if (/^#[\dA-F]{3}$/.test(trimmed)) {
-    const r = trimmed[1]!;
-    const g = trimmed[2]!;
-    const b = trimmed[3]!;
+    const r = trimmed.charAt(1);
+    const g = trimmed.charAt(2);
+    const b = trimmed.charAt(3);
     return `#${r}${r}${g}${g}${b}${b}`;
   }
 

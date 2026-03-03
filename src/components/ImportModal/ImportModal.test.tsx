@@ -84,12 +84,14 @@ describe('ImportModal', () => {
 
     expect(onImport).toHaveBeenCalledTimes(1);
     expect(onImport).toHaveBeenCalledWith(
-      expect.objectContaining({
-        name: 'Test',
-        type: 'regular',
-        colours: [{ id: expect.any(String), hex: '#FF0000' }],
-      }),
+      expect.objectContaining({ name: 'Test', type: 'regular' }) as unknown,
     );
+    const palette = vi.mocked(onImport).mock.calls[0]?.[0] as
+      | { colours: { id: string; hex: string }[] }
+      | undefined;
+    expect(palette?.colours).toHaveLength(1);
+    expect(palette?.colours[0]?.hex).toBe('#FF0000');
+    expect(palette?.colours[0]?.id).toBeTypeOf('string');
   });
 
   it('calls onClose when Cancel is clicked', async () => {

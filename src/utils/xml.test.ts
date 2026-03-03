@@ -11,23 +11,20 @@ describe('parsePaletteXml', () => {
 
     const result = parsePaletteXml(xml);
 
-    expect(result).toEqual({
-      success: true,
-      palette: {
-        name: 'My Palette',
-        type: 'ordered-diverging',
-        colours: [
-          { id: expect.any(String), hex: '#FF0000' },
-          { id: expect.any(String), hex: '#00FF00' },
-          { id: expect.any(String), hex: '#0000FF' },
-        ],
-        selectedColourId: expect.any(String),
-      },
-    });
-    // First colour should be selected
-    if (result.success) {
-      expect(result.palette.selectedColourId).toBe(result.palette.colours[0]?.id);
+    expect(result.success).toBe(true);
+    if (!result.success) return;
+
+    expect(result.palette.name).toBe('My Palette');
+    expect(result.palette.type).toBe('ordered-diverging');
+    expect(result.palette.colours).toHaveLength(3);
+    expect(result.palette.colours[0]?.hex).toBe('#FF0000');
+    expect(result.palette.colours[1]?.hex).toBe('#00FF00');
+    expect(result.palette.colours[2]?.hex).toBe('#0000FF');
+    for (const colour of result.palette.colours) {
+      expect(colour.id).toBeTypeOf('string');
     }
+    // First colour should be selected
+    expect(result.palette.selectedColourId).toBe(result.palette.colours[0]?.id);
   });
 
   it('defaults name to empty string when name attribute is missing', () => {
@@ -80,10 +77,10 @@ describe('parsePaletteXml', () => {
   it('returns error with message for malformed XML', () => {
     const result = parsePaletteXml('<not valid xml');
 
-    expect(result).toEqual({
-      success: false,
-      error: expect.stringContaining('XML'),
-    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toContain('XML');
+    }
   });
 
   it('returns error when root element is not color-palette', () => {
@@ -120,10 +117,10 @@ describe('parsePaletteXml', () => {
     const xml = '<color-palette type="gradient"><color>#FF0000</color></color-palette>';
     const result = parsePaletteXml(xml);
 
-    expect(result).toEqual({
-      success: false,
-      error: expect.stringMatching(/type/i),
-    });
+    expect(result.success).toBe(false);
+    if (!result.success) {
+      expect(result.error).toMatch(/type/i);
+    }
   });
 });
 

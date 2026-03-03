@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { ExportModal } from './ExportModal';
 import { type Palette } from '../../types';
@@ -39,17 +39,15 @@ describe('ExportModal', () => {
     renderExportModal();
 
     expect(screen.getByRole('dialog', { name: 'Export Palette' })).toBeInTheDocument();
-    const textarea = screen.getByRole('textbox');
+    const textarea = screen.getByRole<HTMLTextAreaElement>('textbox');
     expect(textarea).toHaveAttribute('readOnly');
-    expect((textarea as HTMLTextAreaElement).value).toContain(
-      '<color-palette name="Test" type="regular">',
-    );
+    expect(textarea.value).toContain('<color-palette name="Test" type="regular">');
   });
 
   it('includes all colours in the generated XML', () => {
     renderExportModal();
 
-    const value = (screen.getByRole('textbox') as HTMLTextAreaElement).value;
+    const value = screen.getByRole<HTMLTextAreaElement>('textbox').value;
     expect(value).toContain('#FF0000');
     expect(value).toContain('#00FF00');
   });
@@ -88,14 +86,7 @@ describe('ExportModal', () => {
     const user = userEvent.setup();
     const { onClose } = renderExportModal();
 
-    const dialog = screen.getByRole('dialog');
-    const footerButtons = within(dialog).getAllByRole('button');
-    // The Close text button is the third button (after X close and Copy isn't before it)
-    const closeButton = footerButtons.find(
-      (btn) => btn.textContent === 'Close',
-    );
-    expect(closeButton).toBeDefined();
-    await user.click(closeButton!);
+    await user.click(screen.getByText('Close', { selector: 'button' }));
 
     expect(onClose).toHaveBeenCalledTimes(1);
   });

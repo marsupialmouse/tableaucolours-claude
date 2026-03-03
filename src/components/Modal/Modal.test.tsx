@@ -33,6 +33,7 @@ describe('Modal', () => {
 
   it('calls showModal on mount', () => {
     renderModal();
+    // eslint-disable-next-line @typescript-eslint/unbound-method
     expect(HTMLDialogElement.prototype.showModal).toHaveBeenCalledTimes(1);
   });
 

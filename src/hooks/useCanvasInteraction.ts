@@ -79,7 +79,7 @@ export function useCanvasInteraction({
       // Check if the pixel is transparent (outside the image)
       if (pixel[3] === 0) return null;
 
-      return rgbToHex({ r: pixel[0]!, g: pixel[1]!, b: pixel[2]! });
+      return rgbToHex({ r: pixel[0] ?? 0, g: pixel[1] ?? 0, b: pixel[2] ?? 0 });
     },
     [canvasRef],
   );

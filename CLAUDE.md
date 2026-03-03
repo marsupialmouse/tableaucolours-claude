@@ -19,7 +19,7 @@ pnpm test:coverage    # Unit tests with V8 coverage
 pnpm test:e2e         # Playwright e2e (starts dev server automatically)
 ```
 
-Pre-commit hook (husky + lint-staged) runs ESLint fix and Prettier on staged `.ts`/`.tsx` files.
+Pre-commit hook (husky + lint-staged) runs ESLint and Prettier on staged `.ts`/`.tsx` files.
 
 ## Architecture
 
@@ -41,7 +41,7 @@ React 19 + Vite 7 + TypeScript + Tailwind CSS v4 (via `@tailwindcss/vite` plugin
 
 ## Workflow Rules
 
-- **Pre-commit verification** — Before committing, run `pnpm build` and `pnpm test` to ensure they pass. The pre-commit hook handles lint and format automatically — never skip it with `--no-verify`.
+- **Pre-commit verification** — Before committing, run `pnpm lint`, `pnpm build`, and `pnpm test` to ensure they pass. The pre-commit hook handles lint and format automatically — never skip it with `--no-verify`.
 - **Component file organization** — Components live in subfolders of `src/components/`, with related files colocated (e.g., `src/components/ColourPicker/ColourPicker.tsx`, `src/components/ColourPicker/ColourPicker.test.tsx`).
 - **Test data conventions** — Prefer factory/helper functions to generate test data rather than shared mutable state or `beforeEach` setup blocks.
 

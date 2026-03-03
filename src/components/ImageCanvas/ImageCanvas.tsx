@@ -1,4 +1,4 @@
-import { useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback, useEffect } from 'react';
 import { computeInitialZoom } from '../../utils/image';
 import { useCanvasInteraction } from '../../hooks/useCanvasInteraction';
 import { ZoomControls } from '../ZoomControls/ZoomControls';
@@ -64,9 +64,8 @@ export function ImageCanvas({
   });
 
   // Update zoom when a new image is loaded
-  const prevImageRef = useRef<HTMLImageElement | null>(null);
-  if (image && image !== prevImageRef.current) {
-    prevImageRef.current = image;
+  useEffect(() => {
+    if (!image) return;
     const container = containerRef.current;
     if (container) {
       const newZoom = computeInitialZoom(
@@ -77,7 +76,7 @@ export function ImageCanvas({
       );
       setZoom(newZoom);
     }
-  }
+  }, [image]);
 
   function handleDragOver(e: React.DragEvent) {
     e.preventDefault();

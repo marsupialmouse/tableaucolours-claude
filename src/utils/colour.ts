@@ -6,9 +6,9 @@ export function hexToRgb(hex: string): RgbColour {
     throw new Error(`Invalid hex colour: ${hex}`);
   }
   return {
-    r: parseInt(match[1]!, 16),
-    g: parseInt(match[2]!, 16),
-    b: parseInt(match[3]!, 16),
+    r: parseInt(match[1] ?? '', 16),
+    g: parseInt(match[2] ?? '', 16),
+    b: parseInt(match[3] ?? '', 16),
   };
 }
 
