@@ -10,7 +10,6 @@ import { useImageLoader } from './hooks/useImageLoader';
 export function App() {
   const [palette, dispatch] = useImmerReducer(paletteReducer, undefined, createDefaultPalette);
   const { image, loadImage, openImagePicker } = useImageLoader();
-
   const selectedIndex = useMemo(
     () => palette.colours.findIndex((c) => c.id === palette.selectedColourId),
     [palette.colours, palette.selectedColourId],
@@ -71,9 +70,6 @@ export function App() {
         }}
         onOpenExport={() => {
           // Phase 6
-        }}
-        onDoubleClickColour={() => {
-          // Phase 4
         }}
       />
       <ImageCanvas

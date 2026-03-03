@@ -6,7 +6,7 @@ interface SwatchProps {
   isSelected: boolean;
   onSelect: (colourId: string) => void;
   onRemove: (colourId: string) => void;
-  onDoubleClick: (colourId: string) => void;
+  onDoubleClick: (colourId: string, element: HTMLElement) => void;
   dragHandlers?: Record<string, unknown> | undefined;
 }
 
@@ -43,8 +43,8 @@ export function Swatch({
         onClick={() => {
           onSelect(colour.id);
         }}
-        onDoubleClick={() => {
-          onDoubleClick(colour.id);
+        onDoubleClick={(e) => {
+          onDoubleClick(colour.id, e.currentTarget);
         }}
         {...dragHandlers}
       />

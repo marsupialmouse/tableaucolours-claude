@@ -1,3 +1,4 @@
+import { useState, useRef, useCallback } from 'react';
 import { type Palette } from '../../types';
 import { type PaletteAction } from '../../state/paletteReducer';
 import { PaletteNameInput } from '../PaletteNameInput/PaletteNameInput';
@@ -5,6 +6,7 @@ import { PaletteTypeSelector } from '../PaletteTypeSelector/PaletteTypeSelector'
 import { SwatchList } from '../SwatchList/SwatchList';
 import { PaletteActions } from '../PaletteActions/PaletteActions';
 import { PalettePreview } from '../PalettePreview/PalettePreview';
+import { ColourPicker } from '../ColourPicker/ColourPicker';
 
 interface PalettePanelProps {
   palette: Palette;
@@ -13,7 +15,6 @@ interface PalettePanelProps {
   onOpenExtract: () => void;
   onOpenImport: () => void;
   onOpenExport: () => void;
-  onDoubleClickColour: (colourId: string) => void;
   getDragHandlers?: ((index: number) => Record<string, unknown>) | undefined;
 }
 
@@ -24,9 +25,41 @@ export function PalettePanel({
   onOpenExtract,
   onOpenImport,
   onOpenExport,
-  onDoubleClickColour,
   getDragHandlers,
 }: PalettePanelProps) {
+  const [editingColourId, setEditingColourId] = useState<string | null>(null);
+  const pickerAnchorRef = useRef<HTMLElement | null>(null);
+
+  const editingColour = editingColourId
+    ? palette.colours.find((c) => c.id === editingColourId)
+    : null;
+
+  const handleDoubleClick = useCallback(
+    (colourId: string, element: HTMLElement) => {
+      const colour = palette.colours.find((c) => c.id === colourId);
+      if (!colour) return;
+      pickerAnchorRef.current = element;
+      setEditingColourId(colourId);
+
+      dispatch({ type: 'SELECT_COLOUR', colourId });
+    },
+    [palette.colours, dispatch],
+  );
+
+  const handlePickerColourChange = useCallback(
+    (hex: string) => {
+      if (editingColourId) {
+        dispatch({ type: 'UPDATE_COLOUR', colourId: editingColourId, hex });
+      }
+    },
+    [dispatch, editingColourId],
+  );
+
+  const handlePickerClose = useCallback(() => {
+    setEditingColourId(null);
+    pickerAnchorRef.current?.focus();
+  }, []);
+
   return (
     <aside className="flex w-72 flex-col border-r border-gray-200 bg-gray-50 p-4">
       <div className="flex flex-col gap-4">
@@ -55,7 +88,7 @@ export function PalettePanel({
           onRemove={(colourId) => {
             dispatch({ type: 'REMOVE_COLOUR', colourId });
           }}
-          onDoubleClick={onDoubleClickColour}
+          onDoubleClick={handleDoubleClick}
           getDragHandlers={getDragHandlers}
         />
       </div>
@@ -80,6 +113,15 @@ export function PalettePanel({
           onExport={onOpenExport}
         />
       </div>
+
+      {editingColour && (
+        <ColourPicker
+          hex={editingColour.hex}
+          onColourChange={handlePickerColourChange}
+          onClose={handlePickerClose}
+          anchorRef={pickerAnchorRef}
+        />
+      )}
     </aside>
   );
 }

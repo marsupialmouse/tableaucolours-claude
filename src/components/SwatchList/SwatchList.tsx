@@ -6,7 +6,7 @@ interface SwatchListProps {
   selectedColourId: string | null;
   onSelect: (colourId: string) => void;
   onRemove: (colourId: string) => void;
-  onDoubleClick: (colourId: string) => void;
+  onDoubleClick: (colourId: string, element: HTMLElement) => void;
   getDragHandlers?: ((index: number) => Record<string, unknown>) | undefined;
 }
 

@@ -41,7 +41,7 @@ describe('Swatch', () => {
     await user.dblClick(screen.getByRole('button', { name: '#000000' }));
 
     expect(onDoubleClick).toHaveBeenCalledTimes(1);
-    expect(onDoubleClick).toHaveBeenCalledWith('dbl-click');
+    expect(onDoubleClick).toHaveBeenCalledWith('dbl-click', expect.any(HTMLElement));
   });
 
   it('shows remove button on hover', async () => {
