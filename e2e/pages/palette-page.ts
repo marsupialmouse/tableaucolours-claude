@@ -8,6 +8,121 @@ function hexToRgb(hex: string): string {
   return `rgb(${String(r)}, ${String(g)}, ${String(b)})`;
 }
 
+export class ColourPickerPopover {
+  readonly dialog: Locator;
+  readonly hexInput: Locator;
+  readonly rInput: Locator;
+  readonly gInput: Locator;
+  readonly bInput: Locator;
+  readonly doneButton: Locator;
+
+  constructor(page: Page) {
+    this.dialog = page.getByRole('dialog', { name: 'Colour picker' });
+    this.hexInput = this.dialog.getByLabel('Hex colour');
+    this.rInput = this.dialog.getByRole('textbox', { name: 'R', exact: true });
+    this.gInput = this.dialog.getByRole('textbox', { name: 'G', exact: true });
+    this.bInput = this.dialog.getByRole('textbox', { name: 'B', exact: true });
+    this.doneButton = this.dialog.getByRole('button', { name: 'Done' });
+  }
+
+  async expectOpen() {
+    await expect(this.dialog).toBeVisible();
+  }
+
+  async expectClosed() {
+    await expect(this.dialog).not.toBeVisible();
+  }
+
+  async setHex(hex: string) {
+    await this.hexInput.fill(hex);
+    await this.hexInput.press('Enter');
+  }
+
+  async setRgb(r: number, g: number, b: number) {
+    await this.rInput.fill(String(r));
+    await this.rInput.press('Enter');
+    await this.gInput.fill(String(g));
+    await this.gInput.press('Enter');
+    await this.bInput.fill(String(b));
+    await this.bInput.press('Enter');
+  }
+}
+
+export class ImageCanvasPanel {
+  readonly dropZone: Locator;
+  readonly canvas: Locator;
+  readonly browseButton: Locator;
+  readonly zoomInButton: Locator;
+  readonly zoomOutButton: Locator;
+  readonly zoomSlider: Locator;
+  readonly openImageButton: Locator;
+
+  constructor(private readonly page: Page) {
+    this.dropZone = page.getByTestId('image-drop-zone');
+    this.canvas = page.getByTestId('image-canvas');
+    this.browseButton = page.getByRole('button', { name: /browse/i });
+    this.zoomInButton = page.getByLabel('Zoom in');
+    this.zoomOutButton = page.getByLabel('Zoom out');
+    this.zoomSlider = page.getByLabel('Zoom level');
+    this.openImageButton = page.getByLabel('Open image');
+  }
+
+  async expectDropZoneVisible() {
+    await expect(this.dropZone).toBeVisible();
+  }
+
+  async expectCanvasVisible() {
+    await expect(this.canvas).toBeVisible();
+  }
+
+  async loadImageViaFileChooser(filePath: string) {
+    const fileChooserPromise = this.page.waitForEvent('filechooser');
+    await this.browseButton.click();
+    const fileChooser = await fileChooserPromise;
+    await fileChooser.setFiles(filePath);
+  }
+}
+
+export class ExtractColoursModal {
+  readonly dialog: Locator;
+  readonly replaceRadio: Locator;
+  readonly addRadio: Locator;
+  readonly countInput: Locator;
+  readonly decreaseButton: Locator;
+  readonly increaseButton: Locator;
+  readonly preview: Locator;
+  readonly extractButton: Locator;
+  readonly cancelButton: Locator;
+
+  constructor(page: Page) {
+    this.dialog = page.getByRole('dialog', {
+      name: /extract colours/i,
+    });
+    this.replaceRadio = this.dialog.getByLabel('Replace existing colours');
+    this.addRadio = this.dialog.getByLabel('Add to existing colours');
+    this.countInput = this.dialog.getByLabel('Colour count');
+    this.decreaseButton = this.dialog.getByLabel('Decrease count');
+    this.increaseButton = this.dialog.getByLabel('Increase count');
+    this.preview = this.dialog.getByRole('list', {
+      name: /preview/i,
+    });
+    this.extractButton = this.dialog.getByRole('button', {
+      name: /extract/i,
+    });
+    this.cancelButton = this.dialog.getByRole('button', {
+      name: /cancel/i,
+    });
+  }
+
+  async expectOpen() {
+    await expect(this.dialog).toBeVisible();
+  }
+
+  async expectClosed() {
+    await expect(this.dialog).not.toBeVisible();
+  }
+}
+
 class ImportModal {
   readonly dialog: Locator;
   readonly textarea: Locator;
@@ -75,8 +190,12 @@ export class PalettePage {
   readonly reverseButton: Locator;
   readonly importButton: Locator;
   readonly exportButton: Locator;
+  readonly extractFromImageButton: Locator;
   readonly importModal: ImportModal;
   readonly exportModal: ExportModal;
+  readonly colourPicker: ColourPickerPopover;
+  readonly imageCanvas: ImageCanvasPanel;
+  readonly extractModal: ExtractColoursModal;
 
   constructor(private readonly page: Page) {
     this.swatches = page.locator('[aria-pressed]');
@@ -86,8 +205,12 @@ export class PalettePage {
     this.reverseButton = page.getByRole('button', { name: 'Reverse order' });
     this.importButton = page.getByRole('button', { name: 'Import' });
     this.exportButton = page.getByRole('button', { name: 'Export' });
+    this.extractFromImageButton = page.getByLabel('Extract from image');
     this.importModal = new ImportModal(page);
     this.exportModal = new ExportModal(page);
+    this.colourPicker = new ColourPickerPopover(page);
+    this.imageCanvas = new ImageCanvasPanel(page);
+    this.extractModal = new ExtractColoursModal(page);
   }
 
   async goto() {
@@ -137,12 +260,56 @@ export class PalettePage {
     await expect(this.swatch(index)).toHaveAttribute('aria-pressed', 'false');
   }
 
+  async openColourPicker(index: number) {
+    await this.swatch(index).dblclick();
+  }
+
+  async removeSwatchByHover(index: number) {
+    await this.swatch(index).hover();
+    await this.swatch(index).locator('..').getByLabel('Remove colour').click();
+  }
+
+  async dragSwatch(from: number, to: number) {
+    const source = this.swatch(from);
+    const target = this.swatch(to);
+    await source.evaluate((el) => {
+      el.dispatchEvent(
+        new DragEvent('dragstart', { bubbles: true, dataTransfer: new DataTransfer() }),
+      );
+    });
+    await target.evaluate((el) => {
+      el.dispatchEvent(
+        new DragEvent('dragover', {
+          bubbles: true,
+          cancelable: true,
+          dataTransfer: new DataTransfer(),
+        }),
+      );
+    });
+    await target.evaluate((el) => {
+      el.dispatchEvent(
+        new DragEvent('drop', {
+          bubbles: true,
+          cancelable: true,
+          dataTransfer: new DataTransfer(),
+        }),
+      );
+    });
+    await source.evaluate((el) => {
+      el.dispatchEvent(new DragEvent('dragend', { bubbles: true }));
+    });
+  }
+
   async openImportModal() {
     await this.importButton.click();
   }
 
   async openExportModal() {
     await this.exportButton.click();
+  }
+
+  async openExtractModal() {
+    await this.extractFromImageButton.click();
   }
 
   /** Set up a known palette state via XML import */

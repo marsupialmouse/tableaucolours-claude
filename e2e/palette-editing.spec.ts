@@ -95,4 +95,101 @@ test.describe('palette editing', () => {
     await expect(palettePage.swatches).toHaveCount(20);
     await expect(palettePage.addColourButton).toBeDisabled();
   });
+
+  test('moves colour left with Shift+ArrowLeft', async ({ palettePage, page }) => {
+    await palettePage.setupPalette({
+      colours: ['#AA0000', '#BB0000', '#CC0000', '#DD0000', '#EE0000'],
+    });
+    await palettePage.swatch(2).click();
+
+    await page.keyboard.press('Shift+ArrowLeft');
+
+    await palettePage.expectColours(['#AA0000', '#CC0000', '#BB0000', '#DD0000', '#EE0000']);
+  });
+
+  test('moves colour right with Shift+ArrowRight', async ({ palettePage, page }) => {
+    await palettePage.setupPalette({
+      colours: ['#AA0000', '#BB0000', '#CC0000', '#DD0000', '#EE0000'],
+    });
+    await palettePage.swatch(2).click();
+
+    await page.keyboard.press('Shift+ArrowRight');
+
+    await palettePage.expectColours(['#AA0000', '#BB0000', '#DD0000', '#CC0000', '#EE0000']);
+  });
+
+  test('moves colour across row boundary', async ({ palettePage, page }) => {
+    await palettePage.setupPalette({
+      colours: ['#AA0000', '#BB0000', '#CC0000', '#DD0000', '#EE0000', '#FF0000'],
+    });
+    await palettePage.swatch(4).click();
+
+    await page.keyboard.press('Shift+ArrowLeft');
+
+    await palettePage.expectColours([
+      '#AA0000',
+      '#BB0000',
+      '#CC0000',
+      '#EE0000',
+      '#DD0000',
+      '#FF0000',
+    ]);
+  });
+
+  test('does not move first colour further left', async ({ palettePage, page }) => {
+    await palettePage.setupPalette({
+      colours: ['#AA0000', '#BB0000', '#CC0000'],
+    });
+    await palettePage.swatch(0).click();
+
+    await page.keyboard.press('Shift+ArrowLeft');
+
+    await palettePage.expectColours(['#AA0000', '#BB0000', '#CC0000']);
+  });
+
+  test('does not move last colour further right', async ({ palettePage, page }) => {
+    await palettePage.setupPalette({
+      colours: ['#AA0000', '#BB0000', '#CC0000'],
+    });
+    await palettePage.swatch(2).click();
+
+    await page.keyboard.press('Shift+ArrowRight');
+
+    await palettePage.expectColours(['#AA0000', '#BB0000', '#CC0000']);
+  });
+
+  test('removes colour via Backspace key', async ({ palettePage, page }) => {
+    await palettePage.setupPalette({
+      colours: ['#FF0000', '#00FF00', '#0000FF'],
+    });
+    await palettePage.swatch(1).click();
+
+    await page.keyboard.press('Backspace');
+
+    await palettePage.expectColours(['#FF0000', '#0000FF']);
+  });
+
+  test('removes colour via hover X button', async ({ palettePage }) => {
+    await palettePage.setupPalette({
+      colours: ['#FF0000', '#00FF00', '#0000FF'],
+    });
+
+    await palettePage.removeSwatchByHover(1);
+
+    await palettePage.expectColours(['#FF0000', '#0000FF']);
+  });
+
+  test('shows remove button on hover and hides on leave', async ({ palettePage }) => {
+    await palettePage.setupPalette({ colours: ['#FF0000', '#00FF00'] });
+    const removeButton = palettePage.swatch(0).locator('..').getByLabel('Remove colour');
+
+    await expect(removeButton).not.toBeVisible();
+
+    await palettePage.swatch(0).hover();
+    await expect(removeButton).toBeVisible();
+
+    // Move mouse away
+    await palettePage.nameInput.hover();
+    await expect(removeButton).not.toBeVisible();
+  });
 });
