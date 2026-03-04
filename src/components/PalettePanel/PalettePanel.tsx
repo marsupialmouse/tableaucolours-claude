@@ -66,7 +66,7 @@ export function PalettePanel({
   }, []);
 
   return (
-    <aside className="flex w-72 flex-col border-r border-gray-200 bg-gray-50 p-4">
+    <aside aria-label="Palette" className="flex w-72 flex-col border-r border-gray-200 bg-gray-50 p-4">
       <div className="flex flex-col gap-4">
         <PaletteNameInput
           name={palette.name}

@@ -60,12 +60,14 @@ export function ImportModal({ onImport, onClose }: ImportModalProps) {
       )}
       <div className="mt-4 flex justify-end gap-2">
         <button
+          type="button"
           onClick={onClose}
           className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Cancel
         </button>
         <button
+          type="button"
           onClick={handleImport}
           disabled={parsedPalette === null}
           className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"

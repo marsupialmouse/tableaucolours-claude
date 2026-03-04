@@ -41,13 +41,10 @@ React 19 + Vite 7 + TypeScript + Tailwind CSS v4 (via `@tailwindcss/vite` plugin
 
 ## Workflow Rules
 
-- **Pre-commit verification** — Before committing, run `pnpm lint`, `pnpm build`, and `pnpm test` to ensure they pass. The pre-commit hook handles lint and format automatically — never skip it with `--no-verify`.
+- **Pre-commit verification** — Before committing, run `pnpm lint`, `pnpm build`, `pnpm test`, and `pnpm test:e2e` to ensure they pass. The pre-commit hook handles lint and format automatically — never skip it with `--no-verify`.
 - **Component file organization** — Components live in subfolders of `src/components/`, with related files colocated (e.g., `src/components/ColourPicker/ColourPicker.tsx`, `src/components/ColourPicker/ColourPicker.test.tsx`).
 - **Test data conventions** — Prefer factory/helper functions to generate test data rather than shared mutable state or `beforeEach` setup blocks.
 
 ## Testing
 
-- **Factory functions** — Create `renderComponentName()` helpers that accept `Partial<Props>` overrides. This keeps tests focused on what they're asserting, not boilerplate setup.
-- **jsdom limitations** — jsdom does not implement `HTMLCanvasElement.getContext()` or `Element.setPointerCapture()`. Canvas components should be tested for structure and props, not pixel output. Use optional chaining (`?.()`) on `setPointerCapture`/`releasePointerCapture` calls.
-- **Mock patterns for drag events** — `React.DragEvent` mocks need at minimum `{ dataTransfer: { effectAllowed: '' } }` for `dragStart` and `{ preventDefault: vi.fn() }` for `drop`.
-- **Avoid `toHaveStyle` for computed properties** — jsdom's style handling can be unreliable for properties like `order`. Access `element.style.order` directly instead.
+Testing conventions are in `.claude/rules/unit-tests.md` and `.claude/rules/e2e-tests.md` — loaded automatically when editing test files.
