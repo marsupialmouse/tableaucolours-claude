@@ -43,7 +43,7 @@ class ExportModal {
   readonly copyButton: Locator;
   readonly closeButton: Locator;
 
-  constructor(private readonly page: Page) {
+  constructor(page: Page) {
     this.dialog = page.getByRole('dialog', { name: /export/i });
     this.textarea = this.dialog.locator('#export-xml');
     this.copyButton = this.dialog.getByRole('button', { name: /copy/i });
