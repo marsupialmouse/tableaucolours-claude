@@ -6,10 +6,11 @@ import { PalettePanel } from './components/PalettePanel/PalettePanel';
 import { ImageCanvas } from './components/ImageCanvas/ImageCanvas';
 import { ImportModal } from './components/ImportModal/ImportModal';
 import { ExportModal } from './components/ExportModal/ExportModal';
+import { ExtractColoursModal } from './components/ExtractColoursModal/ExtractColoursModal';
 import { useKeyboardShortcuts } from './hooks/useKeyboardShortcuts';
 import { useImageLoader } from './hooks/useImageLoader';
 
-type ActiveModal = 'none' | 'import' | 'export';
+type ActiveModal = 'none' | 'import' | 'export' | 'extract';
 
 export function App() {
   const [palette, dispatch] = useImmerReducer(paletteReducer, undefined, createDefaultPalette);
@@ -68,7 +69,7 @@ export function App() {
         dispatch={dispatch}
         hasImage={image !== null}
         onOpenExtract={() => {
-          // Phase 7
+          setActiveModal('extract');
         }}
         onOpenImport={() => {
           setActiveModal('import');
@@ -84,6 +85,22 @@ export function App() {
         onLoadImage={loadImage}
         onOpenImagePicker={openImagePicker}
       />
+      {activeModal === 'extract' && image && (
+        <ExtractColoursModal
+          image={image}
+          palette={palette}
+          onExtract={(hexValues, mode) => {
+            dispatch({
+              type: mode === 'replace' ? 'REPLACE_COLOURS' : 'ADD_COLOURS',
+              hexValues,
+            });
+            setActiveModal('none');
+          }}
+          onClose={() => {
+            setActiveModal('none');
+          }}
+        />
+      )}
       {activeModal === 'import' && (
         <ImportModal
           onImport={(imported) => {

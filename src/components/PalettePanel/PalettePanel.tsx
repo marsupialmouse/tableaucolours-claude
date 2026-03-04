@@ -102,7 +102,7 @@ export function PalettePanel({
         <PalettePreview colours={palette.colours} type={palette.type} />
 
         <PaletteActions
-          colourCount={palette.colours.length}
+          palette={palette}
           hasImage={hasImage}
           onAddColour={() => {
             dispatch({ type: 'ADD_COLOUR' });

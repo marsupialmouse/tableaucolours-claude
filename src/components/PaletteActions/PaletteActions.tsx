@@ -1,7 +1,8 @@
-import { MAX_COLOURS } from '../../types';
+import { type Palette } from '../../types';
+import { canAddColours } from '../../state/paletteHelpers';
 
 interface PaletteActionsProps {
-  colourCount: number;
+  palette: Palette;
   hasImage: boolean;
   onAddColour: () => void;
   onClearAll: () => void;
@@ -36,7 +37,7 @@ function ActionButton({ label, shortcut, disabled = false, onClick, children }: 
 }
 
 export function PaletteActions({
-  colourCount,
+  palette,
   hasImage,
   onAddColour,
   onClearAll,
@@ -45,9 +46,11 @@ export function PaletteActions({
   onImport,
   onExport,
 }: PaletteActionsProps) {
+  const colourCount = palette.colours.length;
+
   return (
     <div className="grid grid-cols-6 gap-1.5">
-      <ActionButton label="Add colour" shortcut="+" disabled={colourCount >= MAX_COLOURS} onClick={onAddColour}>
+      <ActionButton label="Add colour" shortcut="+" disabled={!canAddColours(palette)} onClick={onAddColour}>
         <svg className="h-5 w-5" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
           <path d="M8 3v10M3 8h10" />
         </svg>

@@ -1,5 +1,6 @@
 import { type Draft } from 'immer';
 import { type Palette, type PaletteColour, type PaletteType, MAX_COLOURS } from '../types';
+import { canAddColours, availableColourSlots } from './paletteHelpers';
 
 export type PaletteAction =
   | { type: 'SET_NAME'; name: string }
@@ -58,7 +59,7 @@ export function paletteReducer(draft: Draft<Palette>, action: PaletteAction): vo
       return;
     }
     case 'ADD_COLOUR': {
-      if (draft.colours.length >= MAX_COLOURS) return;
+      if (!canAddColours(draft)) return;
       const newColour = makeColour(action.hex ?? '#FFFFFF');
       draft.colours.push(newColour);
       draft.selectedColourId = newColour.id;
@@ -112,8 +113,7 @@ export function paletteReducer(draft: Draft<Palette>, action: PaletteAction): vo
       return;
     }
     case 'ADD_COLOURS': {
-      const available = MAX_COLOURS - draft.colours.length;
-      const toAdd = action.hexValues.slice(0, available);
+      const toAdd = action.hexValues.slice(0, availableColourSlots(draft));
       for (const hex of toAdd) {
         draft.colours.push(makeColour(hex));
       }
@@ -124,7 +124,7 @@ export function paletteReducer(draft: Draft<Palette>, action: PaletteAction): vo
       return;
     }
     case 'REPLACE_COLOURS': {
-      const colours = action.hexValues.slice(0, MAX_COLOURS).map((hex) => makeColour(hex));
+      const colours = action.hexValues.slice(0, MAX_COLOURS).map(makeColour);
       draft.colours = colours;
       draft.selectedColourId = colours[0]?.id ?? null;
       return;

@@ -1,10 +1,23 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
+import { type Palette, MAX_COLOURS } from '../../types';
 import { PaletteActions } from './PaletteActions';
+
+function makePalette(colourCount: number): Palette {
+  return {
+    name: 'Test',
+    type: 'regular',
+    colours: Array.from({ length: colourCount }, (_, i) => ({
+      id: String(i),
+      hex: '#000000',
+    })),
+    selectedColourId: null,
+  };
+}
 
 function renderActions(overrides?: Partial<React.ComponentProps<typeof PaletteActions>>) {
   const defaultProps: React.ComponentProps<typeof PaletteActions> = {
-    colourCount: 3,
+    palette: makePalette(3),
     hasImage: false,
     onAddColour: vi.fn(),
     onClearAll: vi.fn(),
@@ -30,27 +43,27 @@ describe('PaletteActions', () => {
   });
 
   it('disables Add when colour count is at maximum', () => {
-    renderActions({ colourCount: 20 });
+    renderActions({ palette: makePalette(MAX_COLOURS) });
     expect(screen.getByRole('button', { name: /add/i })).toBeDisabled();
   });
 
   it('enables Add when colour count is below maximum', () => {
-    renderActions({ colourCount: 19 });
+    renderActions({ palette: makePalette(MAX_COLOURS - 1) });
     expect(screen.getByRole('button', { name: /add/i })).toBeEnabled();
   });
 
   it('disables Clear all when there are no colours', () => {
-    renderActions({ colourCount: 0 });
+    renderActions({ palette: makePalette(0) });
     expect(screen.getByRole('button', { name: /clear all/i })).toBeDisabled();
   });
 
   it('disables Reverse when there are fewer than 2 colours', () => {
-    renderActions({ colourCount: 1 });
+    renderActions({ palette: makePalette(1) });
     expect(screen.getByRole('button', { name: /reverse/i })).toBeDisabled();
   });
 
   it('enables Reverse when there are 2 or more colours', () => {
-    renderActions({ colourCount: 2 });
+    renderActions({ palette: makePalette(2) });
     expect(screen.getByRole('button', { name: /reverse/i })).toBeEnabled();
   });
 
