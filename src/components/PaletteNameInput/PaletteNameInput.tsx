@@ -6,7 +6,10 @@ interface PaletteNameInputProps {
 export function PaletteNameInput({ name, onChange }: PaletteNameInputProps) {
   return (
     <div>
-      <label htmlFor="palette-name" className="mb-1 block text-sm font-medium text-gray-700">
+      <label
+        htmlFor="palette-name"
+        className="font-heading text-text-secondary mb-1 block text-sm font-medium"
+      >
         Palette name
       </label>
       <input
@@ -17,7 +20,7 @@ export function PaletteNameInput({ name, onChange }: PaletteNameInputProps) {
           onChange(e.target.value);
         }}
         placeholder="Unnamed palette"
-        className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+        className="border-border-default bg-surface-input text-text-primary placeholder:text-text-muted focus:border-accent focus:ring-accent w-full rounded border px-3 py-1.5 text-sm transition-colors focus:ring-1 focus:outline-none"
       />
     </div>
   );

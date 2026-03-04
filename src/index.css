@@ -1,9 +1,82 @@
 @import 'tailwindcss';
 
+@theme {
+  /* Surfaces */
+  --color-surface-base: #faf8f5;
+  --color-surface-panel: #f5f3f0;
+  --color-surface-canvas: #eae7e3;
+  --color-surface-input: #ffffff;
+  --color-surface-overlay: #efece8;
+
+  /* Borders */
+  --color-border-subtle: #e2ddd6;
+  --color-border-default: #d6d0c8;
+  --color-border-strong: #c4bdb3;
+
+  /* Text */
+  --color-text-primary: #3d3832;
+  --color-text-secondary: #6b6560;
+  --color-text-muted: #9c958e;
+
+  /* Accent */
+  --color-accent: #525049;
+  --color-accent-hover: #3d3832;
+  --color-accent-subtle: rgba(82, 80, 73, 0.08);
+
+  /* Danger */
+  --color-danger: #c53030;
+
+  /* Fonts */
+  --font-body: 'DM Sans', system-ui, sans-serif;
+  --font-heading: 'Source Serif 4', Georgia, serif;
+
+  /* Radii */
+  --radius-panel: 0.75rem;
+
+  /* Shadows */
+  --shadow-soft: 0 1px 3px rgba(61, 56, 50, 0.06), 0 1px 2px rgba(61, 56, 50, 0.04);
+  --shadow-elevated: 0 4px 12px rgba(61, 56, 50, 0.08), 0 2px 4px rgba(61, 56, 50, 0.04);
+
+  /* Easing */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface-base);
+  color: var(--color-text-primary);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: var(--color-border-default);
+  border-radius: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: var(--color-border-strong);
+}
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border-default) transparent;
+}
+
+/* Zoom slider */
 .zoom-slider {
   appearance: none;
   height: 4px;
-  background: #d1d5db;
+  background: var(--color-border-default);
   border-radius: 2px;
   outline: none;
 }
@@ -13,12 +86,13 @@
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #6b7280;
+  background: var(--color-accent);
   cursor: pointer;
+  transition: background 150ms var(--ease-smooth);
 }
 
 .zoom-slider::-webkit-slider-thumb:hover {
-  background: #4b5563;
+  background: var(--color-accent-hover);
 }
 
 .zoom-slider::-moz-range-thumb {
@@ -26,20 +100,91 @@
   height: 14px;
   border: none;
   border-radius: 50%;
-  background: #6b7280;
+  background: var(--color-accent);
   cursor: pointer;
 }
 
 .zoom-slider::-moz-range-thumb:hover {
-  background: #4b5563;
+  background: var(--color-accent-hover);
 }
 
 .zoom-slider::-moz-range-track {
   height: 4px;
-  background: #d1d5db;
+  background: var(--color-border-default);
   border-radius: 2px;
 }
 
 .zoom-slider::-moz-range-progress {
-  background: #d1d5db;
+  background: var(--color-border-default);
+}
+
+/* Dialog entrance animation */
+dialog[open] {
+  animation: dialog-enter 200ms var(--ease-smooth);
+}
+
+dialog[open]::backdrop {
+  animation: backdrop-fade 200ms var(--ease-smooth);
+}
+
+@keyframes dialog-enter {
+  from {
+    opacity: 0;
+    scale: 0.96;
+  }
+  to {
+    opacity: 1;
+    scale: 1;
+  }
+}
+
+@keyframes backdrop-fade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Custom radio buttons */
+input[type='radio'] {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border: 2px solid var(--color-border-default);
+  border-radius: 50%;
+  background: var(--color-surface-input);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition:
+    border-color 150ms var(--ease-smooth),
+    background 150ms var(--ease-smooth);
+}
+
+input[type='radio']:checked {
+  border-color: var(--color-accent);
+  background: var(--color-accent);
+  box-shadow: inset 0 0 0 3px var(--color-surface-input);
+}
+
+input[type='radio']:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* Colour picker popover entrance */
+.popover-enter {
+  animation: popover-enter 150ms var(--ease-smooth);
+}
+
+@keyframes popover-enter {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }

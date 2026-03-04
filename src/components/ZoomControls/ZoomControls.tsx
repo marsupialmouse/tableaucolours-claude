@@ -37,7 +37,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         }}
         disabled={zoom <= MIN_ZOOM}
         aria-label="Zoom out"
-        className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-50"
+        className="text-text-secondary hover:bg-surface-overlay hover:text-text-primary flex h-7 w-7 items-center justify-center rounded transition-colors disabled:opacity-50"
       >
         <svg
           className="h-4 w-4"
@@ -71,7 +71,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         }}
         disabled={zoom >= MAX_ZOOM}
         aria-label="Zoom in"
-        className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-50"
+        className="text-text-secondary hover:bg-surface-overlay hover:text-text-primary flex h-7 w-7 items-center justify-center rounded transition-colors disabled:opacity-50"
       >
         <svg
           className="h-4 w-4"
@@ -85,7 +85,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         </svg>
       </button>
 
-      <span className="w-10 text-center text-xs text-gray-500">{percentage}%</span>
+      <span className="text-text-secondary w-10 text-center text-xs">{percentage}%</span>
     </div>
   );
 }

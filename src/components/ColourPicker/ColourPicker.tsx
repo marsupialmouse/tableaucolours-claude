@@ -18,7 +18,7 @@ export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: Colour
   const popoverRef = useRef<HTMLDivElement>(null);
 
   // Position the popover relative to the anchor
-  const [position, setPosition] = useState({ top: 0, left: 0 });
+  const [position, setPosition] = useState<{ top: number; left: number } | null>(null);
   useEffect(() => {
     const anchor = anchorRef.current;
     if (!anchor) return;
@@ -41,10 +41,12 @@ export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: Colour
     setPosition({ top, left });
   }, [anchorRef]);
 
-  // Focus popover on mount
+  // Focus popover once positioned (invisible elements cannot receive focus)
   useEffect(() => {
-    popoverRef.current?.focus();
-  }, []);
+    if (position !== null) {
+      popoverRef.current?.focus();
+    }
+  }, [position]);
 
   // Close on outside mousedown (exclude clicks on the anchor swatch)
   useEffect(() => {
@@ -128,8 +130,8 @@ export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: Colour
       tabIndex={-1}
       role="dialog"
       aria-label="Colour picker"
-      className="fixed z-50 flex w-[232px] flex-col gap-2 rounded-lg border border-gray-200 bg-white p-3 shadow-lg outline-none"
-      style={{ top: position.top, left: position.left }}
+      className={`popover-enter border-border-subtle shadow-elevated fixed z-50 flex w-[232px] flex-col gap-2 rounded-lg border bg-white p-3 outline-none ${position === null ? 'invisible' : ''}`}
+      style={{ top: position?.top ?? 0, left: position?.left ?? 0 }}
       onKeyDown={handleKeyDown}
     >
       <ColourArea hue={hsv.h} saturation={hsv.s} value={hsv.v} onChange={handleAreaChange} />
@@ -142,7 +144,7 @@ export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: Colour
 
       <button
         type="button"
-        className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200"
+        className="bg-accent hover:bg-accent-hover rounded px-2 py-1 text-xs font-medium text-white transition-colors"
         onClick={() => {
           onClose();
         }}

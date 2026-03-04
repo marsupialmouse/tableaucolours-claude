@@ -12,11 +12,11 @@ function TypeIcon({ type }: { type: PaletteType }) {
     case 'regular':
       return (
         <svg className="h-5 w-full" viewBox="0 0 64 20" aria-hidden="true">
-          <rect x="0" y="0" width="10" height="20" rx="2" fill="#888" />
-          <rect x="14" y="0" width="10" height="20" rx="2" fill="#666" />
-          <rect x="28" y="0" width="10" height="20" rx="2" fill="#aaa" />
-          <rect x="42" y="0" width="10" height="20" rx="2" fill="#555" />
-          <rect x="54" y="0" width="10" height="20" rx="2" fill="#999" />
+          <rect x="0" y="0" width="10" height="20" rx="2" fill="#9c958e" />
+          <rect x="14" y="0" width="10" height="20" rx="2" fill="#6b6560" />
+          <rect x="28" y="0" width="10" height="20" rx="2" fill="#c4bdb3" />
+          <rect x="42" y="0" width="10" height="20" rx="2" fill="#525049" />
+          <rect x="54" y="0" width="10" height="20" rx="2" fill="#d6d0c8" />
         </svg>
       );
     case 'ordered-sequential':
@@ -24,8 +24,8 @@ function TypeIcon({ type }: { type: PaletteType }) {
         <svg className="h-5 w-full" viewBox="0 0 64 20" aria-hidden="true">
           <defs>
             <linearGradient id="seq-grad">
-              <stop offset="0%" stopColor="#ddd" />
-              <stop offset="100%" stopColor="#333" />
+              <stop offset="0%" stopColor="#e2ddd6" />
+              <stop offset="100%" stopColor="#3d3832" />
             </linearGradient>
           </defs>
           <rect x="0" y="0" width="64" height="20" rx="2" fill="url(#seq-grad)" />
@@ -36,9 +36,9 @@ function TypeIcon({ type }: { type: PaletteType }) {
         <svg className="h-5 w-full" viewBox="0 0 64 20" aria-hidden="true">
           <defs>
             <linearGradient id="div-grad">
-              <stop offset="0%" stopColor="#333" />
-              <stop offset="50%" stopColor="#eee" />
-              <stop offset="100%" stopColor="#333" />
+              <stop offset="0%" stopColor="#3d3832" />
+              <stop offset="50%" stopColor="#f5f3f0" />
+              <stop offset="100%" stopColor="#3d3832" />
             </linearGradient>
           </defs>
           <rect x="0" y="0" width="64" height="20" rx="2" fill="url(#div-grad)" />
@@ -70,7 +70,9 @@ export function PaletteTypeSelector({ selectedType, onChange }: PaletteTypeSelec
 
   return (
     <div>
-      <span className="mb-1 block text-sm font-medium text-gray-700">Palette type</span>
+      <span className="font-heading text-text-secondary mb-1 block text-sm font-medium">
+        Palette type
+      </span>
       <div role="radiogroup" aria-label="Palette type" className="grid grid-cols-3 gap-1.5">
         {TYPES.map((type, index) => {
           const isSelected = type === selectedType;
@@ -85,8 +87,8 @@ export function PaletteTypeSelector({ selectedType, onChange }: PaletteTypeSelec
               tabIndex={isSelected ? 0 : -1}
               className={`flex flex-col items-center gap-1 rounded-md border-2 px-2 py-1.5 transition-colors ${
                 isSelected
-                  ? 'border-blue-500 bg-blue-50'
-                  : 'border-gray-200 bg-white hover:border-gray-300'
+                  ? 'border-accent bg-accent-subtle'
+                  : 'border-border-subtle bg-surface-input hover:border-border-strong'
               }`}
               onClick={() => {
                 onChange(type);
@@ -96,7 +98,7 @@ export function PaletteTypeSelector({ selectedType, onChange }: PaletteTypeSelec
               }}
             >
               <TypeIcon type={type} />
-              <span className="text-xs text-gray-600">{PALETTE_TYPE_LABELS[type]}</span>
+              <span className="text-text-secondary text-xs">{PALETTE_TYPE_LABELS[type]}</span>
             </button>
           );
         })}

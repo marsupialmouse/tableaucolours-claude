@@ -68,7 +68,7 @@ export function PalettePanel({
   return (
     <aside
       aria-label="Palette"
-      className="flex w-72 flex-col border-r border-gray-200 bg-gray-50 p-4"
+      className="border-border-subtle bg-surface-panel flex w-72 flex-col border-r p-4"
     >
       <div className="flex flex-col gap-4">
         <PaletteNameInput
@@ -86,7 +86,7 @@ export function PalettePanel({
         />
       </div>
 
-      <div className="h-72 overflow-y-auto py-4">
+      <div className="custom-scrollbar h-72 overflow-y-auto py-4">
         <SwatchList
           colours={palette.colours}
           selectedColourId={palette.selectedColourId}

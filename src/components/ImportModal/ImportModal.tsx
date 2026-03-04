@@ -40,13 +40,16 @@ export function ImportModal({ onImport, onClose }: ImportModalProps) {
 
   return (
     <Modal title="Import Palette" onClose={onClose}>
-      <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="import-xml">
+      <label
+        className="font-heading text-text-secondary mb-1 block text-sm font-medium"
+        htmlFor="import-xml"
+      >
         Paste colour palette XML
       </label>
       <textarea
         id="import-xml"
         autoFocus
-        className="h-56 w-full rounded border border-gray-300 p-2 font-mono text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
+        className="custom-scrollbar border-border-default bg-surface-input text-text-primary focus:border-accent focus:ring-accent h-56 w-full rounded border p-2 font-mono text-sm transition-colors focus:ring-1 focus:outline-none"
         placeholder={
           '<color-palette name="My Palette" type="regular">\n    <color>#FF0000</color>\n</color-palette>'
         }
@@ -56,7 +59,7 @@ export function ImportModal({ onImport, onClose }: ImportModalProps) {
         }}
       />
       {error && (
-        <p role="alert" className="mt-1 text-sm text-red-600">
+        <p role="alert" className="text-danger mt-1 text-sm">
           {error}
         </p>
       )}
@@ -64,7 +67,7 @@ export function ImportModal({ onImport, onClose }: ImportModalProps) {
         <button
           type="button"
           onClick={onClose}
-          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="border-border-default text-text-secondary hover:bg-surface-overlay rounded border px-4 py-2 text-sm font-medium transition-colors"
         >
           Cancel
         </button>
@@ -72,7 +75,7 @@ export function ImportModal({ onImport, onClose }: ImportModalProps) {
           type="button"
           onClick={handleImport}
           disabled={parsedPalette === null}
-          className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+          className="bg-accent hover:bg-accent-hover rounded px-4 py-2 text-sm font-medium text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
         >
           Import
         </button>

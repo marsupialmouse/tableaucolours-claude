@@ -37,16 +37,16 @@ export function Modal({ title, onClose, children }: ModalProps) {
     <dialog
       ref={dialogRef}
       aria-label={title}
-      className="fixed top-1/2 left-1/2 w-full max-w-xl -translate-x-1/2 -translate-y-1/2 rounded-lg bg-white p-6 shadow-xl backdrop:bg-black/50"
+      className="border-border-subtle shadow-elevated fixed top-1/2 left-1/2 w-full max-w-xl -translate-x-1/2 -translate-y-1/2 rounded-lg border bg-white p-6 backdrop:bg-black/50"
       onCancel={handleCancel}
       onClick={handleClick}
     >
       <div className="mb-4 flex items-start justify-between">
-        <h2 className="text-lg font-semibold text-gray-900">{title}</h2>
+        <h2 className="font-heading text-text-primary text-lg font-semibold">{title}</h2>
         <button
           onClick={onClose}
           aria-label="Close"
-          className="-mt-1 -mr-1 rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600 focus:outline-none"
+          className="text-text-muted hover:bg-surface-overlay hover:text-text-secondary -mt-1 -mr-1 rounded p-1 transition-colors focus:outline-none"
         >
           <svg className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
             <path d="M6.28 5.22a.75.75 0 00-1.06 1.06L8.94 10l-3.72 3.72a.75.75 0 101.06 1.06L10 11.06l3.72 3.72a.75.75 0 101.06-1.06L11.06 10l3.72-3.72a.75.75 0 00-1.06-1.06L10 8.94 6.28 5.22z" />

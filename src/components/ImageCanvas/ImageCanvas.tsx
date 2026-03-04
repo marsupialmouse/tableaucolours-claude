@@ -95,8 +95,8 @@ export function ImageCanvas({
   if (!image) {
     return (
       <div
-        className={`flex flex-1 flex-col items-center justify-center gap-3 ${
-          isDragOver ? 'bg-blue-50' : 'bg-gray-100'
+        className={`flex flex-1 flex-col items-center justify-center gap-3 transition-colors ${
+          isDragOver ? 'bg-accent-subtle' : 'bg-surface-canvas'
         }`}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -104,7 +104,7 @@ export function ImageCanvas({
         data-testid="image-drop-zone"
       >
         <svg
-          className="h-12 w-12 text-gray-300"
+          className="text-border-strong h-12 w-12"
           viewBox="0 0 48 48"
           fill="none"
           stroke="currentColor"
@@ -116,11 +116,11 @@ export function ImageCanvas({
           <circle cx="18" cy="18" r="4" />
           <path d="M6 34l10-10 8 8 6-6 12 12" />
         </svg>
-        <p className="text-sm text-gray-400">
+        <p className="text-text-muted text-sm">
           Drop an image here, paste from clipboard, or{' '}
           <button
             type="button"
-            className="cursor-pointer text-blue-500 underline hover:text-blue-600"
+            className="text-accent hover:text-accent-hover cursor-pointer underline"
             onClick={onOpenImagePicker}
           >
             browse
@@ -133,7 +133,7 @@ export function ImageCanvas({
   return (
     <div
       ref={containerRef}
-      className="flex flex-1 flex-col bg-gray-100"
+      className="bg-surface-canvas flex flex-1 flex-col"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
       onDrop={handleDrop}
@@ -165,16 +165,16 @@ export function ImageCanvas({
         )}
       </div>
 
-      <div className="flex items-center justify-end border-t border-gray-200 bg-gray-50 px-3 py-1.5">
+      <div className="border-border-subtle bg-surface-panel flex items-center justify-end border-t px-3 py-1.5">
         <ZoomControls zoom={zoom} onZoomChange={setZoom} />
 
-        <div className="ml-2 border-l border-gray-300 pl-2">
+        <div className="border-border-default ml-2 border-l pl-2">
           <button
             type="button"
             onClick={onOpenImagePicker}
             aria-label="Open image"
             title="Open image"
-            className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700"
+            className="text-text-secondary hover:bg-surface-overlay hover:text-text-primary flex h-7 w-7 items-center justify-center rounded transition-colors"
           >
             <svg
               className="h-4 w-4"
