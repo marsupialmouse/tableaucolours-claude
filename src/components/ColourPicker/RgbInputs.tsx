@@ -33,12 +33,12 @@ function RgbField({
 
   return (
     <label className="flex items-center gap-1">
-      <span className="text-[10px] font-medium text-gray-400">{label}</span>
+      <span className="text-text-muted text-[10px] font-medium">{label}</span>
       <input
         type="text"
         inputMode="numeric"
         aria-label={label}
-        className="w-full rounded border border-gray-300 px-1.5 py-0.5 text-xs"
+        className="border-border-default bg-surface-input text-text-primary focus:border-accent w-full rounded border px-1.5 py-0.5 text-xs transition-colors focus:outline-none"
         value={text}
         onChange={(e) => {
           setText(e.target.value);

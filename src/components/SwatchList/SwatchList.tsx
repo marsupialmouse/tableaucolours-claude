@@ -19,7 +19,7 @@ export function SwatchList({
   getDragHandlers,
 }: SwatchListProps) {
   if (colours.length === 0) {
-    return <p className="py-4 text-center text-sm text-gray-400">No colours in palette</p>;
+    return <p className="text-text-muted py-4 text-center text-sm">No colours in palette</p>;
   }
 
   return (

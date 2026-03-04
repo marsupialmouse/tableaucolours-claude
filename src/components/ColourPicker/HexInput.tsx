@@ -26,7 +26,7 @@ export function HexInput({ hex, onChange }: HexInputProps) {
     <input
       type="text"
       aria-label="Hex colour"
-      className="w-full rounded border border-gray-300 px-1.5 py-0.5 font-mono text-xs"
+      className="border-border-default bg-surface-input text-text-primary focus:border-accent w-full rounded border px-1.5 py-0.5 font-mono text-xs transition-colors focus:outline-none"
       value={text}
       onChange={(e) => {
         setText(e.target.value);

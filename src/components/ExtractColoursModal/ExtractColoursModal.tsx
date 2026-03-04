@@ -66,7 +66,7 @@ export function ExtractColoursModal({
                 handleModeChange('replace');
               }}
             />
-            <span className="text-sm text-gray-800">Replace existing colours</span>
+            <span className="text-text-primary text-sm">Replace existing colours</span>
           </label>
           <label
             className={`flex items-center gap-2 ${!canAdd ? 'cursor-not-allowed opacity-50' : ''}`}
@@ -81,13 +81,13 @@ export function ExtractColoursModal({
                 handleModeChange('add');
               }}
             />
-            <span className="text-sm text-gray-800">Add to existing colours</span>
+            <span className="text-text-primary text-sm">Add to existing colours</span>
           </label>
         </fieldset>
 
         <div className="flex items-center gap-3">
-          <span className="text-sm text-gray-800">Number of colours to extract</span>
-          <div className="inline-flex items-stretch overflow-hidden rounded border border-gray-300">
+          <span className="text-text-primary text-sm">Number of colours to extract</span>
+          <div className="border-border-default inline-flex items-stretch overflow-hidden rounded border">
             <button
               type="button"
               onClick={() => {
@@ -95,7 +95,7 @@ export function ExtractColoursModal({
               }}
               disabled={count <= 1}
               aria-label="Decrease count"
-              className="border-r border-gray-300 bg-gray-50 px-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+              className="border-border-default bg-surface-overlay text-text-secondary hover:bg-border-subtle border-r px-2 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
             >
               &minus;
             </button>
@@ -115,7 +115,7 @@ export function ExtractColoursModal({
               }}
               disabled={count >= maxCount}
               aria-label="Increase count"
-              className="border-l border-gray-300 bg-gray-50 px-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
+              className="border-border-default bg-surface-overlay text-text-secondary hover:bg-border-subtle border-l px-2 transition-colors disabled:cursor-not-allowed disabled:opacity-50"
             >
               +
             </button>
@@ -123,7 +123,7 @@ export function ExtractColoursModal({
         </div>
 
         <div>
-          <p className="mb-1.5 text-sm text-gray-800">Preview</p>
+          <p className="font-heading text-text-primary mb-1.5 text-sm">Preview</p>
           <div className="flex gap-1" role="list" aria-label="Extracted colour preview">
             {preview.map((hex, i) => (
               <div
@@ -141,7 +141,7 @@ export function ExtractColoursModal({
           <button
             type="button"
             onClick={onClose}
-            className="rounded border border-gray-300 px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+            className="border-border-default text-text-secondary hover:bg-surface-overlay rounded border px-4 py-2 text-sm transition-colors"
           >
             Cancel
           </button>
@@ -151,7 +151,7 @@ export function ExtractColoursModal({
               onExtract(preview, mode);
             }}
             disabled={preview.length === 0}
-            className="rounded bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="bg-accent hover:bg-accent-hover rounded px-4 py-2 text-sm text-white transition-colors disabled:cursor-not-allowed disabled:opacity-50"
           >
             Extract
           </button>

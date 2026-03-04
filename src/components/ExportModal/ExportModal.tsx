@@ -35,28 +35,31 @@ export function ExportModal({ palette, onClose }: ExportModalProps) {
 
   return (
     <Modal title="Export Palette" onClose={onClose}>
-      <label className="mb-1 block text-sm font-medium text-gray-700" htmlFor="export-xml">
+      <label
+        className="font-heading text-text-secondary mb-1 block text-sm font-medium"
+        htmlFor="export-xml"
+      >
         Colour palette XML
       </label>
       <textarea
         id="export-xml"
         readOnly
         autoFocus
-        className="h-56 w-full rounded border border-gray-300 bg-gray-50 p-2 font-mono text-sm"
+        className="custom-scrollbar border-border-default bg-surface-panel text-text-primary h-56 w-full rounded border p-2 font-mono text-sm"
         value={xml}
       />
       <div className="mt-4 flex justify-end gap-2">
         <button
           type="button"
           onClick={onClose}
-          className="rounded border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
+          className="border-border-default text-text-secondary hover:bg-surface-overlay rounded border px-4 py-2 text-sm font-medium transition-colors"
         >
           Close
         </button>
         <button
           type="button"
           onClick={() => void handleCopy()}
-          className="rounded bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+          className="bg-accent hover:bg-accent-hover rounded px-4 py-2 text-sm font-medium text-white transition-colors"
         >
           {copied ? 'Copied!' : 'Copy'}
         </button>

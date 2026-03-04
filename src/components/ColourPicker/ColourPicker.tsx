@@ -128,7 +128,7 @@ export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: Colour
       tabIndex={-1}
       role="dialog"
       aria-label="Colour picker"
-      className="fixed z-50 flex w-[232px] flex-col gap-2 rounded-lg border border-gray-200 bg-white p-3 shadow-lg outline-none"
+      className="popover-enter border-border-subtle shadow-elevated fixed z-50 flex w-[232px] flex-col gap-2 rounded-lg border bg-white p-3 outline-none"
       style={{ top: position.top, left: position.left }}
       onKeyDown={handleKeyDown}
     >
@@ -142,7 +142,7 @@ export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: Colour
 
       <button
         type="button"
-        className="rounded bg-gray-100 px-2 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200"
+        className="bg-accent hover:bg-accent-hover rounded px-2 py-1 text-xs font-medium text-white transition-colors"
         onClick={() => {
           onClose();
         }}

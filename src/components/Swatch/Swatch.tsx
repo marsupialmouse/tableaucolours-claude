@@ -34,10 +34,10 @@ export function Swatch({
         type="button"
         aria-label={colour.hex}
         aria-pressed={isSelected}
-        className={`h-12 w-12 rounded-md transition-shadow ${
+        className={`h-12 w-12 rounded-md transition-all duration-150 ${
           isSelected
-            ? 'ring-2 ring-blue-500 ring-offset-2'
-            : 'ring-1 ring-gray-300 hover:ring-gray-400'
+            ? 'ring-accent ring-offset-surface-panel scale-110 ring-2 ring-offset-2'
+            : 'ring-border-default hover:ring-border-strong ring-1 hover:scale-105'
         }`}
         style={{ backgroundColor: colour.hex }}
         onClick={() => {
@@ -52,7 +52,7 @@ export function Swatch({
         <button
           type="button"
           aria-label="Remove colour"
-          className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-500 leading-none text-white shadow-sm hover:bg-red-600"
+          className="bg-danger absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border border-white leading-none text-white shadow-sm hover:brightness-110"
           onClick={(e) => {
             e.stopPropagation();
             onRemove(colour.id);

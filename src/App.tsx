@@ -63,7 +63,7 @@ export function App() {
   );
 
   return (
-    <div className="flex h-screen bg-white">
+    <div className="bg-surface-base font-body flex h-screen">
       <PalettePanel
         palette={palette}
         dispatch={dispatch}
