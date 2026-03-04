@@ -1,6 +1,6 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { rgbToHex } from '../utils/colour';
-import { MIN_ZOOM, MAX_ZOOM } from '../utils/image';
+import { clampZoom } from '../utils/image';
 
 interface UseCanvasInteractionOptions {
   canvasRef: React.RefObject<HTMLCanvasElement | null>;
@@ -137,8 +137,7 @@ export function useCanvasInteraction({
       e.preventDefault();
 
       const delta = e.deltaY > 0 ? -0.1 : 0.1;
-      const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom + delta));
-      onZoomChange(Math.round(newZoom * 100) / 100);
+      onZoomChange(clampZoom(zoom + delta));
     }
 
     canvas.addEventListener('wheel', handleWheel, { passive: false });

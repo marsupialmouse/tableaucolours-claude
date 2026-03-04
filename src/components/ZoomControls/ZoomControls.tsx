@@ -1,4 +1,4 @@
-import { MIN_ZOOM, MAX_ZOOM } from '../../utils/image';
+import { MIN_ZOOM, MAX_ZOOM, clampZoom } from '../../utils/image';
 
 interface ZoomControlsProps {
   zoom: number;
@@ -25,8 +25,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
   const percentage = Math.round(zoom * 100);
 
   function stepZoom(delta: number) {
-    const newZoom = Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, zoom + delta));
-    onZoomChange(Math.round(newZoom * 100) / 100);
+    onZoomChange(clampZoom(zoom + delta));
   }
 
   return (
@@ -38,7 +37,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         }}
         disabled={zoom <= MIN_ZOOM}
         aria-label="Zoom out"
-        className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-40"
+        className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-50"
       >
         <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
           <path d="M3 8h10" />
@@ -52,8 +51,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         step={1}
         value={Math.round(zoomToSlider(zoom))}
         onChange={(e) => {
-          const newZoom = sliderToZoom(Number(e.target.value));
-          onZoomChange(Math.round(newZoom * 100) / 100);
+          onZoomChange(clampZoom(sliderToZoom(Number(e.target.value))));
         }}
         aria-label="Zoom level"
         className="zoom-slider w-40"
@@ -66,7 +64,7 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         }}
         disabled={zoom >= MAX_ZOOM}
         aria-label="Zoom in"
-        className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-40"
+        className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-50"
       >
         <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
           <path d="M8 3v10M3 8h10" />

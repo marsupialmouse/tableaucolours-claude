@@ -69,7 +69,7 @@ export function ExtractColoursModal({
             <span className="text-sm text-gray-800">Replace existing colours</span>
           </label>
           <label
-            className={`flex items-center gap-2 ${!canAdd ? 'cursor-not-allowed opacity-40' : ''}`}
+            className={`flex items-center gap-2 ${!canAdd ? 'cursor-not-allowed opacity-50' : ''}`}
           >
             <input
               type="radio"
@@ -95,7 +95,7 @@ export function ExtractColoursModal({
               }}
               disabled={count <= 1}
               aria-label="Decrease count"
-              className="border-r border-gray-300 bg-gray-50 px-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="border-r border-gray-300 bg-gray-50 px-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
             >
               &minus;
             </button>
@@ -115,7 +115,7 @@ export function ExtractColoursModal({
               }}
               disabled={count >= maxCount}
               aria-label="Increase count"
-              className="border-l border-gray-300 bg-gray-50 px-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-40"
+              className="border-l border-gray-300 bg-gray-50 px-2 text-gray-600 hover:bg-gray-100 disabled:cursor-not-allowed disabled:opacity-50"
             >
               +
             </button>
@@ -151,7 +151,7 @@ export function ExtractColoursModal({
               onExtract(preview, mode);
             }}
             disabled={preview.length === 0}
-            className="rounded bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-40"
+            className="rounded bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Extract
           </button>

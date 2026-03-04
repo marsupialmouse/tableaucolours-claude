@@ -53,3 +53,8 @@ export function computeInitialZoom(
 
 export const MIN_ZOOM = 0.1;
 export const MAX_ZOOM = 5;
+
+/** Clamp a zoom value to valid bounds and round to 2 decimal places. */
+export function clampZoom(value: number): number {
+  return Math.round(Math.min(MAX_ZOOM, Math.max(MIN_ZOOM, value)) * 100) / 100;
+}

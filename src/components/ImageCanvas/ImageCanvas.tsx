@@ -30,10 +30,6 @@ export function ImageCanvas({
   const [hover, setHover] = useState<HoverState | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
 
-  const handleZoomChange = useCallback((newZoom: number) => {
-    setZoom(newZoom);
-  }, []);
-
   const handlePickColour = useCallback(
     (hex: string) => {
       if (canPickColour) {
@@ -58,7 +54,7 @@ export function ImageCanvas({
     canvasRef,
     image,
     zoom,
-    onZoomChange: handleZoomChange,
+    onZoomChange: setZoom,
     onPickColour: handlePickColour,
     onHoverColour: handleHoverColour,
   });
@@ -162,7 +158,7 @@ export function ImageCanvas({
       </div>
 
       <div className="flex items-center justify-end border-t border-gray-200 bg-gray-50 px-3 py-1.5">
-        <ZoomControls zoom={zoom} onZoomChange={handleZoomChange} />
+        <ZoomControls zoom={zoom} onZoomChange={setZoom} />
 
         <div className="ml-2 border-l border-gray-300 pl-2">
           <button

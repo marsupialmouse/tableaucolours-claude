@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { type Palette } from '../../types';
 import { generatePaletteXml } from '../../utils/xml';
 import { Modal } from '../Modal/Modal';
@@ -12,6 +12,14 @@ export function ExportModal({ palette, onClose }: ExportModalProps) {
   const xml = generatePaletteXml(palette);
   const [copied, setCopied] = useState(false);
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+    };
+  }, []);
 
   async function handleCopy() {
     await navigator.clipboard.writeText(xml);

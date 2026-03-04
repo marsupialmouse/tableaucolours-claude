@@ -12,9 +12,13 @@ export function hexToRgb(hex: string): RgbColour {
   };
 }
 
+/** Clamp a number to the 0–255 byte range, rounding to the nearest integer. */
+export function clampByte(n: number): number {
+  return Math.max(0, Math.min(255, Math.round(n)));
+}
+
 export function rgbToHex(rgb: RgbColour): string {
-  const clamp = (n: number) => Math.max(0, Math.min(255, Math.round(n)));
-  const toHex = (n: number) => clamp(n).toString(16).padStart(2, '0').toUpperCase();
+  const toHex = (n: number) => clampByte(n).toString(16).padStart(2, '0').toUpperCase();
   return `#${toHex(rgb.r)}${toHex(rgb.g)}${toHex(rgb.b)}`;
 }
 

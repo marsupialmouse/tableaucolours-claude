@@ -1,13 +1,10 @@
 import { useState, useEffect } from 'react';
 import { type RgbColour } from '../../types';
+import { clampByte } from '../../utils/colour';
 
 interface RgbInputsProps {
   rgb: RgbColour;
   onChange: (rgb: RgbColour) => void;
-}
-
-function clamp(value: number): number {
-  return Math.max(0, Math.min(255, Math.round(value)));
 }
 
 function RgbField({
@@ -28,7 +25,7 @@ function RgbField({
   function commit() {
     const parsed = parseInt(text, 10);
     if (!isNaN(parsed)) {
-      onChange(clamp(parsed));
+      onChange(clampByte(parsed));
     } else {
       setText(String(value));
     }

@@ -91,27 +91,26 @@ export function ColourPicker({
     [hsv, updateHsv],
   );
 
-  const handleRgbChange = useCallback(
-    (rgb: RgbColour) => {
-      const newHsv = rgbToHsv(rgb);
-      // Preserve hue when saturation is 0 (grey)
-      if (newHsv.s === 0) {
-        newHsv.h = hsv.h;
-      }
-      updateHsv(newHsv);
+  /** Preserve the current hue when the new colour is a grey (saturation === 0). */
+  const updateWithHuePreservation = useCallback(
+    (newHsv: HsvColour) => {
+      updateHsv(newHsv.s === 0 ? { ...newHsv, h: hsv.h } : newHsv);
     },
     [hsv.h, updateHsv],
   );
 
+  const handleRgbChange = useCallback(
+    (rgb: RgbColour) => {
+      updateWithHuePreservation(rgbToHsv(rgb));
+    },
+    [updateWithHuePreservation],
+  );
+
   const handleHexChange = useCallback(
     (newHex: string) => {
-      const newHsv = hexToHsv(newHex);
-      if (newHsv.s === 0) {
-        newHsv.h = hsv.h;
-      }
-      updateHsv(newHsv);
+      updateWithHuePreservation(hexToHsv(newHex));
     },
-    [hsv.h, updateHsv],
+    [updateWithHuePreservation],
   );
 
   function handleKeyDown(e: React.KeyboardEvent) {

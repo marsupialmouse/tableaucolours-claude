@@ -29,7 +29,7 @@ function ActionButton({ label, shortcut, disabled = false, onClick, children }: 
       disabled={disabled}
       aria-label={label}
       title={tooltip}
-      className="flex aspect-square items-center justify-center rounded bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-40"
+      className="flex aspect-square items-center justify-center rounded bg-gray-100 text-gray-600 hover:bg-gray-200 hover:text-gray-800 disabled:cursor-not-allowed disabled:opacity-50"
     >
       {children}
     </button>
