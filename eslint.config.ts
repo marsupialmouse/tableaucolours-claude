@@ -44,5 +44,11 @@ export default tseslint.config(
     },
     settings: { react: { version: '19' } },
   },
+  {
+    files: ['e2e/**/*.ts'],
+    rules: {
+      'react-hooks/rules-of-hooks': 'off',
+    },
+  },
   prettierConfig,
 );

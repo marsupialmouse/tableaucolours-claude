@@ -5,7 +5,7 @@ test('has title', async ({ page }) => {
   await expect(page).toHaveTitle(/Tableau Colours/);
 });
 
-test('renders heading', async ({ page }) => {
+test('renders palette panel', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toBeVisible();
+  await expect(page.getByRole('radiogroup', { name: /palette type/i })).toBeVisible();
 });
