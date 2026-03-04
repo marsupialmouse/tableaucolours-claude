@@ -7,20 +7,14 @@ interface PalettePreviewProps {
 
 export function PalettePreview({ colours, type }: PalettePreviewProps) {
   if (colours.length === 0) {
-    return (
-      <div className="h-8 rounded border border-dashed border-gray-300 bg-gray-50" />
-    );
+    return <div className="h-8 rounded border border-dashed border-gray-300 bg-gray-50" />;
   }
 
   if (type === 'regular') {
     return (
       <div className="flex h-8 overflow-hidden rounded" data-testid="palette-preview">
         {colours.map((colour) => (
-          <div
-            key={colour.id}
-            className="flex-1"
-            style={{ backgroundColor: colour.hex }}
-          />
+          <div key={colour.id} className="flex-1" style={{ backgroundColor: colour.hex }} />
         ))}
       </div>
     );
@@ -34,10 +28,6 @@ export function PalettePreview({ colours, type }: PalettePreviewProps) {
   const gradient = `linear-gradient(to right, ${stops.join(', ')})`;
 
   return (
-    <div
-      className="h-8 rounded"
-      style={{ background: gradient }}
-      data-testid="palette-preview"
-    />
+    <div className="h-8 rounded" style={{ background: gradient }} data-testid="palette-preview" />
   );
 }

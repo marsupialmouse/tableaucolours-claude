@@ -16,10 +16,7 @@ function chromaticness(r: number, g: number, b: number): number {
  * Requests double the desired count from Color Thief to build a larger pool,
  * scores each by chromaticness, and returns the top `count` as `#RRGGBB` hex strings.
  */
-export function extractColours(
-  image: HTMLImageElement,
-  count: number,
-): string[] {
+export function extractColours(image: HTMLImageElement, count: number): string[] {
   const poolSize = count * 2;
 
   const palette = getPaletteSync(image, { colorCount: poolSize, ignoreWhite: false });

@@ -13,12 +13,7 @@ interface ColourPickerProps {
   anchorRef: React.RefObject<HTMLElement | null>;
 }
 
-export function ColourPicker({
-  hex,
-  onColourChange,
-  onClose,
-  anchorRef,
-}: ColourPickerProps) {
+export function ColourPicker({ hex, onColourChange, onClose, anchorRef }: ColourPickerProps) {
   const [hsv, setHsv] = useState<HsvColour>(() => hexToHsv(hex));
   const popoverRef = useRef<HTMLDivElement>(null);
 
@@ -137,12 +132,7 @@ export function ColourPicker({
       style={{ top: position.top, left: position.left }}
       onKeyDown={handleKeyDown}
     >
-      <ColourArea
-        hue={hsv.h}
-        saturation={hsv.s}
-        value={hsv.v}
-        onChange={handleAreaChange}
-      />
+      <ColourArea hue={hsv.h} saturation={hsv.s} value={hsv.v} onChange={handleAreaChange} />
 
       <HueSlider hue={hsv.h} onChange={handleHueChange} />
 

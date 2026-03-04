@@ -1,9 +1,7 @@
 import { test, expect } from './fixtures';
 
 test.describe('import and export', () => {
-  test('imports palette XML replacing the current palette', async ({
-    palettePage,
-  }) => {
+  test('imports palette XML replacing the current palette', async ({ palettePage }) => {
     await palettePage.setupPalette({ name: 'Old', colours: ['#000000'] });
 
     const xml = [
@@ -41,9 +39,7 @@ test.describe('import and export', () => {
     );
   });
 
-  test('exported XML roundtrips back through import', async ({
-    palettePage,
-  }) => {
+  test('exported XML roundtrips back through import', async ({ palettePage }) => {
     await palettePage.setupPalette({
       name: 'Roundtrip',
       type: 'ordered-diverging',
@@ -72,9 +68,7 @@ test.describe('import and export', () => {
     await expect(palettePage.importModal.importButton).toBeDisabled();
   });
 
-  test('clears validation error when XML is corrected', async ({
-    palettePage,
-  }) => {
+  test('clears validation error when XML is corrected', async ({ palettePage }) => {
     await palettePage.openImportModal();
     await palettePage.importModal.textarea.fill('not xml');
     await expect(palettePage.importModal.importButton).toBeDisabled();

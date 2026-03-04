@@ -47,7 +47,9 @@ export function ImportModal({ onImport, onClose }: ImportModalProps) {
         id="import-xml"
         autoFocus
         className="h-56 w-full rounded border border-gray-300 p-2 font-mono text-sm focus:border-blue-500 focus:ring-1 focus:ring-blue-500 focus:outline-none"
-        placeholder={'<color-palette name="My Palette" type="regular">\n    <color>#FF0000</color>\n</color-palette>'}
+        placeholder={
+          '<color-palette name="My Palette" type="regular">\n    <color>#FF0000</color>\n</color-palette>'
+        }
         value={xml}
         onChange={(e) => {
           handleChange(e.target.value);

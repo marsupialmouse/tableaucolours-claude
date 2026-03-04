@@ -62,9 +62,7 @@ export function PaletteTypeSelector({ selectedType, onChange }: PaletteTypeSelec
       const next = TYPES[nextIndex];
       if (next) {
         onChange(next);
-        const nextElement = document.querySelector<HTMLElement>(
-          `[data-palette-type="${next}"]`,
-        );
+        const nextElement = document.querySelector<HTMLElement>(`[data-palette-type="${next}"]`);
         nextElement?.focus();
       }
     }

@@ -2,9 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { PaletteTypeSelector } from './PaletteTypeSelector';
 
-function renderSelector(
-  overrides?: Partial<React.ComponentProps<typeof PaletteTypeSelector>>,
-) {
+function renderSelector(overrides?: Partial<React.ComponentProps<typeof PaletteTypeSelector>>) {
   const defaultProps: React.ComponentProps<typeof PaletteTypeSelector> = {
     selectedType: 'regular',
     onChange: vi.fn(),

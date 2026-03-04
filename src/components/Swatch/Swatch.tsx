@@ -52,13 +52,20 @@ export function Swatch({
         <button
           type="button"
           aria-label="Remove colour"
-          className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-500 text-white leading-none shadow-sm hover:bg-red-600"
+          className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full border border-white bg-red-500 leading-none text-white shadow-sm hover:bg-red-600"
           onClick={(e) => {
             e.stopPropagation();
             onRemove(colour.id);
           }}
         >
-          <svg className="h-3 w-3" viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+          <svg
+            className="h-3 w-3"
+            viewBox="0 0 12 12"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+          >
             <path d="M3 3l6 6M9 3l-6 6" />
           </svg>
         </button>

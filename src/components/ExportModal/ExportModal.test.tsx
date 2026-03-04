@@ -13,9 +13,7 @@ const TEST_PALETTE: Palette = {
   selectedColourId: 'c1',
 };
 
-function renderExportModal(
-  overrides?: Partial<React.ComponentProps<typeof ExportModal>>,
-) {
+function renderExportModal(overrides?: Partial<React.ComponentProps<typeof ExportModal>>) {
   const defaultProps = {
     palette: TEST_PALETTE,
     onClose: vi.fn(),

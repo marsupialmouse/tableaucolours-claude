@@ -106,7 +106,7 @@ export function ExtractColoursModal({
               value={count}
               onChange={handleInputChange}
               aria-label="Colour count"
-              className="w-12 appearance-none border-none px-1 py-1 text-center text-sm [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none focus:outline-none"
+              className="w-12 appearance-none border-none px-1 py-1 text-center text-sm focus:outline-none [&::-webkit-inner-spin-button]:appearance-none [&::-webkit-outer-spin-button]:appearance-none"
             />
             <button
               type="button"

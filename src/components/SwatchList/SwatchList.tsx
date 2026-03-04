@@ -23,7 +23,11 @@ export function SwatchList({
   }
 
   return (
-    <div className="grid grid-cols-4 justify-items-center gap-y-3" role="listbox" aria-label="Palette colours">
+    <div
+      className="grid grid-cols-4 justify-items-center gap-y-3"
+      role="listbox"
+      aria-label="Palette colours"
+    >
       {colours.map((colour, index) => (
         <Swatch
           key={colour.id}

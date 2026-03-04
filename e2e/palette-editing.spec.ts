@@ -26,10 +26,7 @@ test.describe('palette editing', () => {
     await palettePage.expectSwatchSelected(2);
   });
 
-  test('removes the selected colour and selects the next one', async ({
-    palettePage,
-    page,
-  }) => {
+  test('removes the selected colour and selects the next one', async ({ palettePage, page }) => {
     await palettePage.setupPalette({
       colours: ['#FF0000', '#00FF00', '#0000FF'],
     });
@@ -92,10 +89,7 @@ test.describe('palette editing', () => {
   });
 
   test('does not add beyond 20 colours', async ({ palettePage }) => {
-    const colours = Array.from(
-      { length: 20 },
-      (_, i) => `#${String(i).padStart(2, '0')}0000`,
-    );
+    const colours = Array.from({ length: 20 }, (_, i) => `#${String(i).padStart(2, '0')}0000`);
     await palettePage.setupPalette({ colours });
 
     await expect(palettePage.swatches).toHaveCount(20);

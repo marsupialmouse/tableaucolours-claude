@@ -42,10 +42,7 @@ describe('SwatchList', () => {
       'aria-pressed',
       'false',
     );
-    expect(screen.getByRole('button', { name: '#00FF00' })).toHaveAttribute(
-      'aria-pressed',
-      'true',
-    );
+    expect(screen.getByRole('button', { name: '#00FF00' })).toHaveAttribute('aria-pressed', 'true');
   });
 
   it('calls onSelect when a swatch is clicked', async () => {

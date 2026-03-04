@@ -39,7 +39,14 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         aria-label="Zoom out"
         className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-50"
       >
-        <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <svg
+          className="h-4 w-4"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        >
           <path d="M3 8h10" />
         </svg>
       </button>
@@ -66,7 +73,14 @@ export function ZoomControls({ zoom, onZoomChange }: ZoomControlsProps) {
         aria-label="Zoom in"
         className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700 disabled:opacity-50"
       >
-        <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+        <svg
+          className="h-4 w-4"
+          viewBox="0 0 16 16"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+          strokeLinecap="round"
+        >
           <path d="M8 3v10M3 8h10" />
         </svg>
       </button>

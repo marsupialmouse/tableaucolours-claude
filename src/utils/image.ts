@@ -1,9 +1,4 @@
-const ALLOWED_IMAGE_TYPES = new Set([
-  'image/gif',
-  'image/jpeg',
-  'image/png',
-  'image/webp',
-]);
+const ALLOWED_IMAGE_TYPES = new Set(['image/gif', 'image/jpeg', 'image/png', 'image/webp']);
 
 export const IMAGE_ACCEPT = [...ALLOWED_IMAGE_TYPES].join(',');
 

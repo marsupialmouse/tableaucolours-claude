@@ -79,13 +79,13 @@ export function App() {
         }}
       />
       <main className="flex flex-1">
-      <ImageCanvas
-        image={image}
-        canPickColour={palette.selectedColourId !== null}
-        onPickColour={handlePickColour}
-        onLoadImage={loadImage}
-        onOpenImagePicker={openImagePicker}
-      />
+        <ImageCanvas
+          image={image}
+          canPickColour={palette.selectedColourId !== null}
+          onPickColour={handlePickColour}
+          onLoadImage={loadImage}
+          onOpenImagePicker={openImagePicker}
+        />
       </main>
       {activeModal === 'extract' && image && (
         <ExtractColoursModal

@@ -20,9 +20,7 @@ function makePalette(colourCount: number): Palette {
   };
 }
 
-function renderModal(
-  overrides?: Partial<React.ComponentProps<typeof ExtractColoursModal>>,
-) {
+function renderModal(overrides?: Partial<React.ComponentProps<typeof ExtractColoursModal>>) {
   const defaultProps = {
     image: {} as HTMLImageElement,
     palette: makePalette(3),

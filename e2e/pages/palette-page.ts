@@ -99,15 +99,14 @@ export class PalettePage {
   }
 
   async setType(type: 'regular' | 'sequential' | 'diverging') {
-    await this.page
-      .getByRole('radio', { name: new RegExp(type, 'i') })
-      .click();
+    await this.page.getByRole('radio', { name: new RegExp(type, 'i') }).click();
   }
 
   async expectType(type: 'regular' | 'sequential' | 'diverging') {
-    await expect(
-      this.page.getByRole('radio', { name: new RegExp(type, 'i') }),
-    ).toHaveAttribute('aria-checked', 'true');
+    await expect(this.page.getByRole('radio', { name: new RegExp(type, 'i') })).toHaveAttribute(
+      'aria-checked',
+      'true',
+    );
   }
 
   async addColours(count: number) {
@@ -120,10 +119,7 @@ export class PalettePage {
   async expectColours(hexValues: string[]) {
     await expect(this.swatches).toHaveCount(hexValues.length);
     for (const [i, hex] of hexValues.entries()) {
-      await expect(this.swatch(i)).toHaveCSS(
-        'background-color',
-        hexToRgb(hex),
-      );
+      await expect(this.swatch(i)).toHaveCSS('background-color', hexToRgb(hex));
     }
   }
 
@@ -157,9 +153,7 @@ export class PalettePage {
   }) {
     const name = options.name ? ` name="${options.name}"` : '';
     const type = options.type ?? 'regular';
-    const colourElements = options.colours
-      .map((hex) => `    <color>${hex}</color>`)
-      .join('\n');
+    const colourElements = options.colours.map((hex) => `    <color>${hex}</color>`).join('\n');
     const xml = `<color-palette${name} type="${type}">\n${colourElements}\n</color-palette>`;
     await this.openImportModal();
     await this.importModal.fillAndImport(xml);

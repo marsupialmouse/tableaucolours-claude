@@ -103,7 +103,15 @@ export function ImageCanvas({
         onDrop={handleDrop}
         data-testid="image-drop-zone"
       >
-        <svg className="h-12 w-12 text-gray-300" viewBox="0 0 48 48" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+        <svg
+          className="h-12 w-12 text-gray-300"
+          viewBox="0 0 48 48"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        >
           <rect x="6" y="6" width="36" height="36" rx="4" />
           <circle cx="18" cy="18" r="4" />
           <path d="M6 34l10-10 8 8 6-6 12 12" />
@@ -168,7 +176,15 @@ export function ImageCanvas({
             title="Open image"
             className="flex h-7 w-7 items-center justify-center rounded text-gray-500 hover:bg-gray-200 hover:text-gray-700"
           >
-            <svg className="h-4 w-4" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+            <svg
+              className="h-4 w-4"
+              viewBox="0 0 16 16"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            >
               <rect x="1.5" y="2.5" width="13" height="11" rx="1.5" />
               <circle cx="5.5" cy="6" r="1.5" />
               <path d="M1.5 11l3.5-3.5 3 3 2-2 4.5 4.5" />

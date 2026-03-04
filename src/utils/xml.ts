@@ -7,9 +7,7 @@ const VALID_TYPES: ReadonlySet<string> = new Set<PaletteType>([
   'ordered-diverging',
 ]);
 
-type ParseResult =
-  | { success: true; palette: Palette }
-  | { success: false; error: string };
+type ParseResult = { success: true; palette: Palette } | { success: false; error: string };
 
 /** Normalise a hex colour string to uppercase 6-char "#RRGGBB" format. */
 function normaliseHex(raw: string): string {

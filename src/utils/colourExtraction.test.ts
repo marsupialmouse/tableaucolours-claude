@@ -49,10 +49,7 @@ describe('extractColours', () => {
   });
 
   it('includes greys when they are needed to fill count', () => {
-    mockGetPaletteSync.mockReturnValue([
-      makeColor(128, 128, 128),
-      makeColor(64, 64, 64),
-    ]);
+    mockGetPaletteSync.mockReturnValue([makeColor(128, 128, 128), makeColor(64, 64, 64)]);
 
     const result = extractColours(fakeImage, 2);
     expect(result).toHaveLength(2);
@@ -71,7 +68,10 @@ describe('extractColours', () => {
     ]);
 
     extractColours(fakeImage, 3);
-    expect(mockGetPaletteSync).toHaveBeenCalledWith(fakeImage, { colorCount: 6, ignoreWhite: false });
+    expect(mockGetPaletteSync).toHaveBeenCalledWith(fakeImage, {
+      colorCount: 6,
+      ignoreWhite: false,
+    });
   });
 
   it('returns empty array when getPaletteSync returns null', () => {
